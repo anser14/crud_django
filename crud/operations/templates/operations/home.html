@@ -1,0 +1,52 @@
+{% extends 'operations/base.html' %} 
+{% block title %}update details{% endblock title %}
+{% block heading %}Crud Operations{% endblock heading %}
+{% block content %}
+
+<div class="row ">
+    <div class="col-lg-4 px-5">
+      <h2 class="text-center m-2 alert alert-info">Add New Details</h2>
+      <form action="" method="POST">
+{% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-primary" vlaue="Add">
+      </form>
+    </div>
+    <div class="col-lg-8 " style="height: 650px; overflow-y: scroll;">
+      <h2 class="text-center m-2 alert alert-info">All Details are Here </h2>
+      {% if details %}
+      <table class="table table-hover" >
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Passord</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for detail in details %}
+          <tr>
+            <th scope="row">{{detail.id}}</th>
+            <td>{{detail.name}}</td>
+            <td>{{detail.email}}</td>
+            <td>{{detail.password}}</td>
+            <td><a href="{% url 'updatedata' detail.id %}" class="btn btn-warning btn-sm">Edit</a>
+              <form action="{% url 'delete' detail.id %}" method="post"  class="d-inline">
+                {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-danger btn-sm" >
+        
+          </form></td>
+          </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      {% else %}
+      <h2 class="text-center m-2 alert alert-danger">No data available </h2>
+      {% endif %}
+      
+    </div>
+  </div>
+
+{% endblock content %}
